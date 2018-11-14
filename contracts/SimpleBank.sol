@@ -50,7 +50,6 @@ contract SimpleBank {
     /// @notice Enroll a customer with the bank
     /// @return The users enrolled status
     function enroll() public returns (bool){
-        /* Set the sender's balance to 1000, return the sender's balance */
         enrolled[msg.sender] = true;
         emit LogEnrolled(msg.sender);
 
