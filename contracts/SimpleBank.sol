@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.5.0;
 contract SimpleBank {
 
     //
@@ -6,7 +6,7 @@ contract SimpleBank {
     //
 
     /* Fill in the keyword. Hint: We want to protect our users balance from other contracts*/
-    mapping (address => uint) private balances;
+    mapping (address => uint) internal balances;
 
     /* Fill in the keyword. We want to create a getter function and allow contracts to be able to see if a user is enrolled.  */
     mapping (address => bool) public enrolled;
@@ -27,6 +27,7 @@ contract SimpleBank {
     /* Create an event called LogWithdrawal */
     /* Add 3 arguments for this event, an accountAddress, withdrawAmount and a newBalance */
     event LogWithdrawal(address accountAddress, uint withdrawAmount, uint newBalance);
+
 
     //
     // Functions
@@ -49,15 +50,18 @@ contract SimpleBank {
 
     /// @notice Enroll a customer with the bank
     /// @return The users enrolled status
+    // Emit the appropriate event
     function enroll() public returns (bool){
         enrolled[msg.sender] = true;
         emit LogEnrolled(msg.sender);
-
+        return enrolled[msg.sender];
     }
 
     /// @notice Deposit ether into bank
     /// @return The balance of the user after the deposit is made
     // Add the appropriate keyword so that this function can receive ether
+    // Use the appropriate global variables to get the transaction sender and value
+    // Emit the appropriate event
     function deposit() public payable returns (uint) {
         /* Add the amount to the user's balance, call the event associated with a deposit,
           then return the balance of the user */
@@ -70,6 +74,7 @@ contract SimpleBank {
     /// @dev This does not return any excess ether sent to it
     /// @param withdrawAmount amount you want to withdraw
     /// @return The balance remaining for the user
+    // Emit the appropriate event
     function withdraw(uint withdrawAmount) public returns (uint remainingBal) {
         /* If the sender's balance is at least the amount they want to withdraw,
            Subtract the amount from the sender's balance, and try to send that amount of ether
@@ -90,7 +95,7 @@ contract SimpleBank {
     // Typically, called when invalid data is sent
     // Added so ether sent to this contract is reverted if the contract fails
     // otherwise, the sender's money is transferred to contract
-    function () public {
+    function () external payable  {
         revert();
     }
 }
