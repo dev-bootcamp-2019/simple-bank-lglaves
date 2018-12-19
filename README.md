@@ -12,3 +12,8 @@ If your tests do not pass, modify the contract, recompile, redeploy and retest. 
 ### A note on testing
 
 Check out the testing files to see how tests are implemented in JavaScript. We will go over the details of implementing tests later in the course.
+
+### Checking the Travis Build
+- The .travis.yml file was already set up for the Simple Bank Exercise.
+- Getting the build to work requires signing up to Travis-ci.com using your GitHub login. 
+- Now that you have completed signing up with Travis-ci, a new commit should trigger a Travis CI build.
